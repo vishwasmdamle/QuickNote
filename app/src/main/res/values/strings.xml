@@ -16,5 +16,9 @@
     <string name="debit">Debit</string>
     <string name="Credit">Credit</string>
     <string name="Revert">Revert</string>
+    <string name="title_activity_num_pad_button">NumPadButton</string>
+    <string name="numberNegative">-</string>
+    <string name="numberFloatingPoint">.</string>
+    <string name="Save">Save</string>
 
 </resources>

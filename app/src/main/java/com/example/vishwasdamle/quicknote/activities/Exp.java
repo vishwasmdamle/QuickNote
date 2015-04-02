@@ -1,13 +1,22 @@
-package com.example.vishwasdamle.quickNote;
+package com.example.vishwasdamle.quickNote.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+
+import com.example.vishwasdamle.quickNote.adaptors.ButtonAdaptor;
+import com.example.vishwasdamle.quickNote.R;
+
+import static android.widget.AdapterView.*;
 
 
 public class
@@ -18,9 +27,25 @@ public class
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exp);
         Spinner spinner = (Spinner) findViewById(R.id.transactionType);
+        GridView gridView = (GridView) findViewById(R.id.numPad);
         MultiAutoCompleteTextView description = (MultiAutoCompleteTextView) findViewById(R.id.description);
         initSpinner(spinner);
+        initNumPad(gridView);
         setupAutoCompleteSuggestions(description);
+    }
+
+    private void initNumPad(GridView gridView) {
+        ButtonAdaptor buttonAdaptor = new ButtonAdaptor(this);
+        gridView.setAdapter(buttonAdaptor);
+
+        OnItemClickListener numPadListener = new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                EditText amount = (EditText) findViewById(R.id.amount);
+                amount.setText(amount.getText().toString() + ((Button)view.findViewById(R.id.numPadKey)).getText());
+            }
+        };
+        gridView.setOnItemClickListener(numPadListener);
     }
 
     private void setupAutoCompleteSuggestions(final MultiAutoCompleteTextView description) {
@@ -59,6 +84,8 @@ public class
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        System.out.println("item = [" + item + "]");
+        System.out.println("item.getTitle() = " + item.getTitle());
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -66,5 +93,9 @@ public class
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void save(View view) {
+
     }
 }
