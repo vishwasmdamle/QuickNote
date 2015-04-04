@@ -39,14 +39,20 @@ public class ExpenseEntryMapper extends SQLiteOpenHelper {
 
     public boolean insert(ExpenseEntry expenseEntry) {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
 
+        ContentValues contentValues = generateContentValues(expenseEntry);
+
+        return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
+
+    }
+
+    private ContentValues generateContentValues(ExpenseEntry expenseEntry) {
+        ContentValues contentValues = new ContentValues();
         contentValues.put(TIMESTAMP, String.valueOf(expenseEntry.getTimeStamp()));
         contentValues.put(EXPENSE_TYPE, String.valueOf(expenseEntry.getExpenseType()));
         contentValues.put(AMOUNT, expenseEntry.getAmount());
         contentValues.put(DESCRIPTION, expenseEntry.getDescription());
-        return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
-
+        return contentValues;
     }
 
     public ArrayList<ExpenseEntry> listAll() {

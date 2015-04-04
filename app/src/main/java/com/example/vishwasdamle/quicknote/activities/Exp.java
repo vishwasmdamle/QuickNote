@@ -1,6 +1,6 @@
 package com.example.vishwasdamle.quickNote.activities;
 
-import android.content.res.ColorStateList;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.vishwasdamle.quickNote.adaptors.ButtonAdaptor;
 import com.example.vishwasdamle.quickNote.R;
+import com.example.vishwasdamle.quickNote.model.Constants;
 import com.example.vishwasdamle.quickNote.model.ExpenseEntry;
 import com.example.vishwasdamle.quickNote.model.ExpenseType;
 import com.example.vishwasdamle.quickNote.service.ExpenseService;
@@ -25,11 +26,11 @@ import com.example.vishwasdamle.quickNote.service.ExpenseService;
 import java.util.ArrayList;
 
 import static android.widget.AdapterView.*;
+import static com.example.vishwasdamle.quickNote.R.string.*;
 
 
 public class Exp extends ActionBarActivity {
 
-    public static final String REGEX_DOUBLE = "[-+]?[0-9]*\\.?[0-9]+";
     ExpenseService expenseService;
 
     public Exp() {
@@ -86,6 +87,17 @@ public class Exp extends ActionBarActivity {
         spinner.setSelection(adapter.getPosition(debitStringValue), false);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Constants.EXPORT_REQUEST_CODE && resultCode == RESULT_OK) {
+            String alert = getResources().getString(Exported);
+            String filename = data.getStringExtra(Constants.FILENAME_KEY);
+            if(filename != null) {
+                alert = alert + " : " + filename;
+            }
+            Toast.makeText(this, alert, Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,6 +115,11 @@ public class Exp extends ActionBarActivity {
         System.out.println("item = [" + item + "]");
         System.out.println("item.getTitle() = " + item.getTitle());
 
+        if(id == R.id.export) {
+            System.out.println("export");
+            Intent exportIntent = new Intent(this, ExportActivity.class);
+            startActivityForResult(exportIntent, Constants.EXPORT_REQUEST_CODE);
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -116,24 +133,29 @@ public class Exp extends ActionBarActivity {
         if(expenseEntry == null) {
             return;
         }
-        expenseService.save(expenseEntry);
-        ArrayList<ExpenseEntry> expenseEntryArrayList = expenseService.listAll();
-        for(ExpenseEntry expense : expenseEntryArrayList) {
-            System.out.println("expense = " + expense);
-            System.out.println("expense.getPrintable() = " + expense.getPrintable());
+        if(expenseService.save(expenseEntry)) {
+            Toast.makeText(this, R.string.Saved, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.FailedToSave, Toast.LENGTH_SHORT).show();
         }
+        clearForm();
+    }
+
+    private void clearForm() {
+        ((TextView) findViewById(R.id.description)).setText("");
+        ((TextView) findViewById(R.id.amount)).setText("");
     }
 
     private ExpenseEntry generateExpenseEntry() {
         Spinner expenseType = (Spinner) findViewById(R.id.expenseType);
         TextView descriptionTextView = (TextView) findViewById(R.id.description);
         TextView amountTextView = (TextView) findViewById(R.id.amount);
-        Toast toast = Toast.makeText(this, getString(R.string.fieldErrorMessage), Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, getString(fieldErrorMessage), Toast.LENGTH_LONG);
 
         ExpenseType selectedType = ExpenseType.values()[expenseType.getSelectedItemPosition()];
         String amountString = String.valueOf(amountTextView.getText());
         Double amount;
-        if(amountString.matches(REGEX_DOUBLE)) {
+        if(amountString.matches(Constants.REGEX_DOUBLE)) {
             amount = Double.parseDouble(amountString);
         } else {
             toast.show();

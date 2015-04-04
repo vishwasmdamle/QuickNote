@@ -6,6 +6,10 @@ import org.joda.time.DateTime;
  * Created by vishwasdamle on 03/04/15.
  */
 public class ExpenseEntry {
+    private static final String SEPARATOR = ",";
+    public static final String QUOTE = "\"";
+    public static final String ESCAPED_QUOTE = "\"\"";
+    public static final String NEWLINE_SEPARATOR = "\n";
     DateTime timeStamp;
     ExpenseType expenseType;
     Double amount;
@@ -48,5 +52,14 @@ public class ExpenseEntry {
     @Override
     public String toString() {
         return timeStamp.toString() + "\t" + expenseType.toString() + "\t" + amount + "\t" + description;
+    }
+
+    public String getCSVPrintable() {
+        return (QUOTE + timeStamp + QUOTE)
+                .concat(SEPARATOR).concat(QUOTE + expenseType + QUOTE)
+                .concat(SEPARATOR).concat(String.valueOf(amount))
+                .concat(SEPARATOR).concat(QUOTE + description.replaceAll(QUOTE, ESCAPED_QUOTE) + QUOTE)
+                .concat(NEWLINE_SEPARATOR);
+
     }
 }
