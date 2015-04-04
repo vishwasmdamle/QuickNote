@@ -1,5 +1,6 @@
 package com.example.vishwasdamle.quickNote.activities;
 
+import android.content.res.ColorStateList;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,21 +13,34 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.vishwasdamle.quickNote.adaptors.ButtonAdaptor;
 import com.example.vishwasdamle.quickNote.R;
+import com.example.vishwasdamle.quickNote.model.ExpenseEntry;
+import com.example.vishwasdamle.quickNote.model.ExpenseType;
+import com.example.vishwasdamle.quickNote.service.ExpenseService;
+
+import java.util.ArrayList;
 
 import static android.widget.AdapterView.*;
 
 
-public class
-        Exp extends ActionBarActivity {
+public class Exp extends ActionBarActivity {
+
+    public static final String REGEX_DOUBLE = "[-+]?[0-9]*\\.?[0-9]+";
+    ExpenseService expenseService;
+
+    public Exp() {
+        this.expenseService = new ExpenseService(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exp);
-        Spinner spinner = (Spinner) findViewById(R.id.transactionType);
+        Spinner spinner = (Spinner) findViewById(R.id.expenseType);
         GridView gridView = (GridView) findViewById(R.id.numPad);
         MultiAutoCompleteTextView description = (MultiAutoCompleteTextView) findViewById(R.id.description);
         initSpinner(spinner);
@@ -42,14 +56,14 @@ public class
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 EditText amount = (EditText) findViewById(R.id.amount);
-                amount.setText(amount.getText().toString() + ((Button)view.findViewById(R.id.numPadKey)).getText());
+                amount.setText(amount.getText().toString() + ((Button) view.findViewById(R.id.numPadKey)).getText());
             }
         };
         gridView.setOnItemClickListener(numPadListener);
     }
 
     private void setupAutoCompleteSuggestions(final MultiAutoCompleteTextView description) {
-        String[] descriptions = new String[] {"sample1", "sample2", "example1", "example2"};
+        String[] descriptions = new String[]{"sample1", "sample2", "example1", "example2"};
         ArrayAdapter<String> descriptionAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, descriptions);
         description.setAdapter(descriptionAdapter);
@@ -64,10 +78,12 @@ public class
     }
 
     private void initSpinner(Spinner spinner) {
-        String[] SpinnerOptions = new String[] {"Debit", "Credit", "Revert"};
+        ArrayList<String> SpinnerOptions = ExpenseType.getStringValues(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, SpinnerOptions);
+                android.R.layout.simple_spinner_dropdown_item, SpinnerOptions);
         spinner.setAdapter(adapter);
+        String debitStringValue = getResources().getString(ExpenseType.DEBIT.getStringId());
+        spinner.setSelection(adapter.getPosition(debitStringValue), false);
     }
 
 
@@ -96,6 +112,46 @@ public class
     }
 
     public void save(View view) {
+        ExpenseEntry expenseEntry = generateExpenseEntry();
+        if(expenseEntry == null) {
+            return;
+        }
+        expenseService.save(expenseEntry);
+        ArrayList<ExpenseEntry> expenseEntryArrayList = expenseService.listAll();
+        for(ExpenseEntry expense : expenseEntryArrayList) {
+            System.out.println("expense = " + expense);
+            System.out.println("expense.getPrintable() = " + expense.getPrintable());
+        }
+    }
 
+    private ExpenseEntry generateExpenseEntry() {
+        Spinner expenseType = (Spinner) findViewById(R.id.expenseType);
+        TextView descriptionTextView = (TextView) findViewById(R.id.description);
+        TextView amountTextView = (TextView) findViewById(R.id.amount);
+        Toast toast = Toast.makeText(this, getString(R.string.fieldErrorMessage), Toast.LENGTH_LONG);
+
+        ExpenseType selectedType = ExpenseType.values()[expenseType.getSelectedItemPosition()];
+        String amountString = String.valueOf(amountTextView.getText());
+        Double amount;
+        if(amountString.matches(REGEX_DOUBLE)) {
+            amount = Double.parseDouble(amountString);
+        } else {
+            toast.show();
+            return null;
+        }
+        String description = String.valueOf(descriptionTextView.getText());
+        if(!description.isEmpty()) {
+            description = description.replaceAll("\\s*,\\s*$", "");
+        } else {
+            toast.show();
+            return null;
+        }
+        return new ExpenseEntry(selectedType, amount, description);
+    }
+
+    public void backspace(View view) {
+        EditText amount = (EditText) findViewById(R.id.amount);
+        String text = String.valueOf(amount.getText());
+        if(text.length() > 0) amount.setText(text.substring(0, text.length() - 1));
     }
 }
