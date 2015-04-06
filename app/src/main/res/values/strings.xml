@@ -36,5 +36,9 @@
     <string name="fieldErrorMessage">Please Enter Correct Fields!</string>
     <string name="Share">Share</string>
     <string name="OK">OK</string>
+    <string name="ReviewEntries">Review Entries</string>
+    <string name="title_activity_list">ListActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

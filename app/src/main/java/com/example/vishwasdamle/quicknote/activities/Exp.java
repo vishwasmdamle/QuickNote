@@ -35,7 +35,6 @@ public class Exp extends ActionBarActivity {
     public static final String SHARE_SUBJECT = "Expense Statement";
     public static final String SHARE_EXTRA_TEXT = "Expense statement generated using QuickNote";
     public static final String SHARE_CHOOSER_TITLE = "Send File via...";
-    private static final int SHARE_REQUEST_CODE = 3;
     ExpenseService expenseService;
 
     public Exp() {
@@ -159,6 +158,13 @@ public class Exp extends ActionBarActivity {
             Intent exportIntent = new Intent(this, ExportActivity.class);
             exportIntent.putExtra(REQUEST_CODE_KEY, EXPORT_REQUEST_CODE);
             startActivityForResult(exportIntent, EXPORT_REQUEST_CODE);
+        }
+
+        if(id == R.id.review) {
+            System.out.println("review");
+            Intent exportIntent = new Intent(this, ListActivity.class);
+            exportIntent.putExtra(REQUEST_CODE_KEY, LIST_REQUEST_CODE);
+            startActivityForResult(exportIntent, LIST_REQUEST_CODE);
         }
 
         if(id == R.id.share) {

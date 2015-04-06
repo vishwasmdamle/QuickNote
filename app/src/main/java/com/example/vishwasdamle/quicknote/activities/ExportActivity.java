@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import static com.example.vishwasdamle.quicknote.model.Constants.*;
 import static com.example.vishwasdamle.quicknote.model.Constants.CSV_EXTENSION;
-import static com.example.vishwasdamle.quicknote.model.Constants.DATE_TIME_PATTERN;
+import static com.example.vishwasdamle.quicknote.model.Constants.DATE_TIME_PATTERN_FILE;
 import static com.example.vishwasdamle.quicknote.model.Constants.EXPORT_REQUEST_CODE;
 import static com.example.vishwasdamle.quicknote.model.Constants.FILENAME_PREFIX;
 
@@ -46,7 +46,7 @@ public class ExportActivity extends ActionBarActivity {
 
     public void exportEntries(View view) {
         ArrayList<ExpenseEntry> expenseEntries = generateRecords();
-        String filename = FILENAME_PREFIX +  new DateTime().toString(DATE_TIME_PATTERN);
+        String filename = FILENAME_PREFIX +  new DateTime().toString(DATE_TIME_PATTERN_FILE);
 
         File file = exportToCSV(expenseEntries, filename);
         if(file != null) {
