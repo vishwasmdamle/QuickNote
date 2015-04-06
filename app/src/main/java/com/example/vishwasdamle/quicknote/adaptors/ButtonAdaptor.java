@@ -1,4 +1,4 @@
-package com.example.vishwasdamle.quickNote.adaptors;
+package com.example.vishwasdamle.quicknote.adaptors;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import com.example.vishwasdamle.quickNote.R;
+import com.example.vishwasdamle.quicknote.R;
 
 import java.util.ArrayList;
 

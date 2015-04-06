@@ -1,8 +1,7 @@
-package com.example.vishwasdamle.quickNote.service;
+package com.example.vishwasdamle.quicknote.service;
 
 import android.content.Context;
 import android.os.Environment;
-import android.os.storage.StorageManager;
 import android.util.Log;
 
 import java.io.File;

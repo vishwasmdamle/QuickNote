@@ -1,27 +1,25 @@
-package com.example.vishwasdamle.quickNote.activities;
+package com.example.vishwasdamle.quicknote.activities;
 
 import android.content.Intent;
-import android.os.storage.StorageManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.vishwasdamle.quickNote.R;
-import com.example.vishwasdamle.quickNote.model.ExpenseEntry;
-import com.example.vishwasdamle.quickNote.repository.ExpenseEntryMapper;
-import com.example.vishwasdamle.quickNote.service.FileService;
+import com.example.vishwasdamle.quicknote.R;
+import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
+import com.example.vishwasdamle.quicknote.repository.ExpenseEntryMapper;
+import com.example.vishwasdamle.quicknote.service.FileService;
 
 import org.joda.time.DateTime;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-import static com.example.vishwasdamle.quickNote.model.Constants.*;
-import static com.example.vishwasdamle.quickNote.model.Constants.CSV_EXTENSION;
-import static com.example.vishwasdamle.quickNote.model.Constants.DATE_TIME_PATTERN;
-import static com.example.vishwasdamle.quickNote.model.Constants.EXPORT_REQUEST_CODE;
-import static com.example.vishwasdamle.quickNote.model.Constants.FILENAME_PREFIX;
+import static com.example.vishwasdamle.quicknote.model.Constants.*;
+import static com.example.vishwasdamle.quicknote.model.Constants.CSV_EXTENSION;
+import static com.example.vishwasdamle.quicknote.model.Constants.DATE_TIME_PATTERN;
+import static com.example.vishwasdamle.quicknote.model.Constants.EXPORT_REQUEST_CODE;
+import static com.example.vishwasdamle.quicknote.model.Constants.FILENAME_PREFIX;
 
 
 public class ExportActivity extends ActionBarActivity {

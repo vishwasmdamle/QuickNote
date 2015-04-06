@@ -1,4 +1,4 @@
-package com.example.vishwasdamle.quickNote.repository;
+package com.example.vishwasdamle.quicknote.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.vishwasdamle.quickNote.model.ExpenseEntry;
-import com.example.vishwasdamle.quickNote.model.ExpenseType;
+import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
+import com.example.vishwasdamle.quicknote.model.ExpenseType;
 
 import org.joda.time.DateTime;
 

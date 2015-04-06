@@ -1,4 +1,4 @@
-package com.example.vishwasdamle.quickNote.activities;
+package com.example.vishwasdamle.quicknote.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,17 +17,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.vishwasdamle.quickNote.adaptors.ButtonAdaptor;
-import com.example.vishwasdamle.quickNote.R;
-import com.example.vishwasdamle.quickNote.model.ExpenseEntry;
-import com.example.vishwasdamle.quickNote.model.ExpenseType;
-import com.example.vishwasdamle.quickNote.service.ExpenseService;
+import com.example.vishwasdamle.quicknote.adaptors.ButtonAdaptor;
+import com.example.vishwasdamle.quicknote.R;
+import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
+import com.example.vishwasdamle.quicknote.model.ExpenseType;
+import com.example.vishwasdamle.quicknote.service.ExpenseService;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import static android.widget.AdapterView.*;
-import static com.example.vishwasdamle.quickNote.model.Constants.*;
+import static com.example.vishwasdamle.quicknote.model.Constants.*;
 
 
 public class Exp extends ActionBarActivity {

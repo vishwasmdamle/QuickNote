@@ -1,4 +1,4 @@
-package com.example.vishwasdamle.quickNote.model;
+package com.example.vishwasdamle.quicknote.model;
 
 import org.joda.time.DateTime;
 

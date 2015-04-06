@@ -1,8 +1,8 @@
-package com.example.vishwasdamle.quickNote.model;
+package com.example.vishwasdamle.quicknote.model;
 
 import android.content.Context;
 
-import com.example.vishwasdamle.quickNote.R;
+import com.example.vishwasdamle.quicknote.R;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,9 @@
-package com.example.vishwasdamle.quickNote.service;
+package com.example.vishwasdamle.quicknote.service;
 
 import android.content.Context;
 
-import com.example.vishwasdamle.quickNote.model.ExpenseEntry;
-import com.example.vishwasdamle.quickNote.repository.ExpenseEntryMapper;
+import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
+import com.example.vishwasdamle.quicknote.repository.ExpenseEntryMapper;
 
 import java.util.ArrayList;
 
