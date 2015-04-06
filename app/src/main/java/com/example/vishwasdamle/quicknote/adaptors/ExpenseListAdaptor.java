@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.vishwasdamle.quicknote.R;
 import com.example.vishwasdamle.quicknote.model.Constants;
 import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
+import com.example.vishwasdamle.quicknote.model.ExpenseType;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class ExpenseListAdaptor extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return expenseEntryList.get(i).getUid();
     }
 
     @Override
@@ -46,6 +47,14 @@ public class ExpenseListAdaptor extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.list_layout, viewGroup, false);
         }
         ExpenseEntry currentExpense = expenseEntryList.get(i);
+
+        if(currentExpense.getExpenseType() == ExpenseType.DEBIT) {
+            ((TextView)view.findViewById(R.id.type)).setTextColor(context.getResources().getColor(R.color.red_light));
+        }
+
+        if(currentExpense.getExpenseType() == ExpenseType.CREDIT) {
+            ((TextView)view.findViewById(R.id.type)).setTextColor(context.getResources().getColor(R.color.green_light));
+        }
 
         String expenseType = String.valueOf(currentExpense.getExpenseType().toString().charAt(0));
         ((TextView)view.findViewById(R.id.type)).setText(expenseType);

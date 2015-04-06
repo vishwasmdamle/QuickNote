@@ -10,16 +10,20 @@ public class ExpenseEntry {
     public static final String QUOTE = "\"";
     public static final String ESCAPED_QUOTE = "\"\"";
     public static final String NEWLINE_SEPARATOR = "\n";
+    Long uid;
     DateTime timeStamp;
     ExpenseType expenseType;
     Double amount;
     String description;
+    private String account;
 
-    public ExpenseEntry(DateTime timestamp, ExpenseType expenseType, Double amount, String description) {
+    public ExpenseEntry(Long uid,DateTime timestamp, ExpenseType expenseType, Double amount, String description) {
+        this.uid = uid;
         this.timeStamp = timestamp;
         this.expenseType = expenseType;
         this.amount = amount;
         this.description = description;
+        this.account = "";
     }
 
     public DateTime getTimeStamp() {
@@ -38,15 +42,21 @@ public class ExpenseEntry {
         return description;
     }
 
+    public Long getUid() {
+        return uid;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
     public ExpenseEntry(ExpenseType expenseType, Double amount, String description) {
+        this.uid = 0L;
         this.timeStamp = new DateTime();
         this.expenseType = expenseType;
         this.amount = amount;
         this.description = description;
-    }
-
-    public String getPrintable() {
-        return timeStamp + "\t" + expenseType.toString() + "\t" + amount + "\t" + description;
+        this.account = "";
     }
 
     @Override

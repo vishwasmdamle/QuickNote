@@ -17,12 +17,14 @@ import java.util.ArrayList;
  * Created by vishwasdamle on 03/04/15.
  */
 public class ExpenseEntryMapper extends SQLiteOpenHelper {
+    private static final String UID = "uid";
     private static final String TABLE_NAME = "ExpenseTable";
     private static final String TIMESTAMP = "timestamp";
     private static final String EXPENSE_TYPE = "type";
     private static final String AMOUNT = "amount";
     private static final String DESCRIPTION = "description";
     private static final String DB_NAME = "QuickNote";
+    private static final String ACCOUNT = "account";
 
     public ExpenseEntryMapper(Context context) {
         super(context, DB_NAME, null, 1);
@@ -30,7 +32,7 @@ public class ExpenseEntryMapper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + TIMESTAMP + ", " + EXPENSE_TYPE + ", " + AMOUNT + ", " + DESCRIPTION + ")");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + UID + " INTEGER PRIMARY KEY, " + TIMESTAMP + ", " + EXPENSE_TYPE + ", " + AMOUNT + ", " + DESCRIPTION + ", " + ACCOUNT +  ")");
     }
 
     @Override
@@ -52,6 +54,7 @@ public class ExpenseEntryMapper extends SQLiteOpenHelper {
         contentValues.put(EXPENSE_TYPE, String.valueOf(expenseEntry.getExpenseType()));
         contentValues.put(AMOUNT, expenseEntry.getAmount());
         contentValues.put(DESCRIPTION, expenseEntry.getDescription());
+        contentValues.put(ACCOUNT, expenseEntry.getAccount());
         return contentValues;
     }
 
@@ -64,6 +67,7 @@ public class ExpenseEntryMapper extends SQLiteOpenHelper {
         while (!cursor.isAfterLast()) {
             expenseEntryArrayList.add(
                     new ExpenseEntry(
+                            cursor.getLong(cursor.getColumnIndex(UID)),
                             DateTime.parse(cursor.getString(cursor.getColumnIndex(TIMESTAMP))),
                             ExpenseType.valueOf(
                                     cursor.getString(cursor.getColumnIndex(EXPENSE_TYPE))
