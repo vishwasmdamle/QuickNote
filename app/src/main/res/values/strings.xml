@@ -30,5 +30,6 @@
     <string name="FailedToSave">Failed To Save</string>
 
     <string name="fieldErrorMessage">Please Enter Correct Fields!</string>
+    <string name="Share">Share</string>
 
 </resources>

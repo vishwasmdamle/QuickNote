@@ -1,6 +1,7 @@
 package com.example.vishwasdamle.quickNote.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,19 +19,23 @@ import android.widget.Toast;
 
 import com.example.vishwasdamle.quickNote.adaptors.ButtonAdaptor;
 import com.example.vishwasdamle.quickNote.R;
-import com.example.vishwasdamle.quickNote.model.Constants;
 import com.example.vishwasdamle.quickNote.model.ExpenseEntry;
 import com.example.vishwasdamle.quickNote.model.ExpenseType;
 import com.example.vishwasdamle.quickNote.service.ExpenseService;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static android.widget.AdapterView.*;
-import static com.example.vishwasdamle.quickNote.R.string.*;
+import static com.example.vishwasdamle.quickNote.model.Constants.*;
 
 
 public class Exp extends ActionBarActivity {
 
+    public static final String SHARE_SUBJECT = "Expense Statement";
+    public static final String SHARE_EXTRA_TEXT = "Expense statement generated using QuickNote";
+    public static final String SHARE_CHOOSER_TITLE = "Send File via...";
+    private static final int SHARE_REQUEST_CODE = 3;
     ExpenseService expenseService;
 
     public Exp() {
@@ -89,14 +94,30 @@ public class Exp extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == Constants.EXPORT_REQUEST_CODE && resultCode == RESULT_OK) {
-            String alert = getResources().getString(Exported);
-            String filename = data.getStringExtra(Constants.FILENAME_KEY);
+        if(requestCode == EXPORT_REQUEST_CODE && resultCode == RESULT_OK) {
+            String alert = getResources().getString(R.string.Exported);
+            String filename = data.getStringExtra(FILENAME_KEY);
             if(filename != null) {
                 alert = alert + " : " + filename;
             }
             Toast.makeText(this, alert, Toast.LENGTH_LONG).show();
         }
+
+        if(requestCode == EXPORT_TO_SHARE_REQUEST_CODE && resultCode == RESULT_OK) {
+            String fileType = getIntent().getStringExtra(FILE_TYPE_KEY);
+            String filename = data.getStringExtra(FILENAME_KEY);
+
+            Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+            if(fileType != null && fileType.equals(FILE_TYPE_CSV))
+                shareIntent.setType("message/rfc822");
+
+            shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, SHARE_SUBJECT);
+            shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, SHARE_EXTRA_TEXT);
+//            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filename)));
+
+            startActivityForResult(Intent.createChooser(shareIntent, SHARE_CHOOSER_TITLE), SHARE_REQUEST_CODE);
+        }
+
     }
 
     @Override
@@ -118,7 +139,15 @@ public class Exp extends ActionBarActivity {
         if(id == R.id.export) {
             System.out.println("export");
             Intent exportIntent = new Intent(this, ExportActivity.class);
-            startActivityForResult(exportIntent, Constants.EXPORT_REQUEST_CODE);
+            exportIntent.putExtra(REQUEST_CODE_KEY, EXPORT_REQUEST_CODE);
+            startActivityForResult(exportIntent, EXPORT_REQUEST_CODE);
+        }
+
+        if(id == R.id.share) {
+            System.out.println("share");
+            Intent exportIntent = new Intent(this, ExportActivity.class);
+            exportIntent.putExtra(REQUEST_CODE_KEY, EXPORT_TO_SHARE_REQUEST_CODE);
+            startActivityForResult(exportIntent, EXPORT_TO_SHARE_REQUEST_CODE);
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -150,12 +179,12 @@ public class Exp extends ActionBarActivity {
         Spinner expenseType = (Spinner) findViewById(R.id.expenseType);
         TextView descriptionTextView = (TextView) findViewById(R.id.description);
         TextView amountTextView = (TextView) findViewById(R.id.amount);
-        Toast toast = Toast.makeText(this, getString(fieldErrorMessage), Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, getString(R.string.fieldErrorMessage), Toast.LENGTH_LONG);
 
         ExpenseType selectedType = ExpenseType.values()[expenseType.getSelectedItemPosition()];
         String amountString = String.valueOf(amountTextView.getText());
         Double amount;
-        if(amountString.matches(Constants.REGEX_DOUBLE)) {
+        if(amountString.matches(REGEX_DOUBLE)) {
             amount = Double.parseDouble(amountString);
         } else {
             toast.show();

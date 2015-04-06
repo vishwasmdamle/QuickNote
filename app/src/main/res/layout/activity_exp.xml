@@ -72,7 +72,8 @@
             android:layout_below="@+id/backspace"
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:isScrollContainer="false" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
