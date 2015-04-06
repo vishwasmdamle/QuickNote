@@ -48,11 +48,12 @@ public class ExportActivity extends ActionBarActivity {
 
     public void exportEntries(View view) {
         ArrayList<ExpenseEntry> expenseEntries = generateRecords();
-
         String filename = FILENAME_PREFIX +  new DateTime().toString(DATE_TIME_PATTERN);
-        if(exportToCSV(expenseEntries, filename)) {
+
+        File file = exportToCSV(expenseEntries, filename);
+        if(file != null) {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra(FILENAME_KEY, filename);
+            resultIntent.putExtra(FILENAME_KEY, file.getPath());
             resultIntent.putExtra(FILE_TYPE_KEY, FILE_TYPE_CSV);
             this.setResult(RESULT_OK, resultIntent);
         }
@@ -64,14 +65,15 @@ public class ExportActivity extends ActionBarActivity {
         return expenseEntryMapper.listAll();
     }
 
-    private boolean exportToCSV(ArrayList<ExpenseEntry> expenseEntries, String filename) {
+    private File exportToCSV(ArrayList<ExpenseEntry> expenseEntries, String filename) {
         StringBuilder fileContent = new StringBuilder();
         for(ExpenseEntry entry : expenseEntries) {
             fileContent.append(entry.getCSVPrintable());
         }
 
         File file = fileService.getFile(CSV_DIRECTORY, filename + CSV_EXTENSION);
-        if(file == null) return false;
-        return fileService.writeToFile(file, fileContent.toString());
+        if(file == null) return null;
+        if(!fileService.writeToFile(file, fileContent.toString())) return null;
+        return file;
     }
 }

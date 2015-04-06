@@ -25,11 +25,16 @@
     <string name="Export">Export Document</string>
     <string name="ExportForSharing">Export Document For Sharing</string>
 
-    <string name="Exported">Document Exported</string>
+    <string name="Exported">Document Exported Successfully</string>
     <string name="Saved">Saved</string>
+    <string name="Shared">Document Shared Successfully</string>
+
+    <string name="FailedToExport">Failed To Export Document</string>
     <string name="FailedToSave">Failed To Save</string>
+    <string name="FailedToShare">Failed To Share Document</string>
 
     <string name="fieldErrorMessage">Please Enter Correct Fields!</string>
     <string name="Share">Share</string>
+    <string name="OK">OK</string>
 
 </resources>

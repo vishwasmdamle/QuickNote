@@ -94,30 +94,48 @@ public class Exp extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == EXPORT_REQUEST_CODE && resultCode == RESULT_OK) {
+        if(requestCode == EXPORT_REQUEST_CODE) {
+            processExportResult(data, resultCode);
+        }
+
+        if(requestCode == EXPORT_TO_SHARE_REQUEST_CODE) {
+            processExportForSharingResult(data, resultCode);
+        }
+    }
+
+    private void processExportForSharingResult(Intent data, int resultCode) {
+        if(resultCode == RESULT_OK) {
+            String fileType = data.getStringExtra(FILE_TYPE_KEY);
+            String filename = data.getStringExtra(FILENAME_KEY);
+
+            Intent shareIntent = generateFileSharingIntent(fileType, filename);
+
+            startActivityForResult(Intent.createChooser(shareIntent, SHARE_CHOOSER_TITLE), SHARE_REQUEST_CODE);
+        }
+    }
+
+    private void processExportResult(Intent data, int resultCode) {
+        if(resultCode == RESULT_OK) {
             String alert = getResources().getString(R.string.Exported);
             String filename = data.getStringExtra(FILENAME_KEY);
             if(filename != null) {
                 alert = alert + " : " + filename;
             }
             Toast.makeText(this, alert, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.FailedToExport, Toast.LENGTH_LONG).show();
         }
+    }
 
-        if(requestCode == EXPORT_TO_SHARE_REQUEST_CODE && resultCode == RESULT_OK) {
-            String fileType = getIntent().getStringExtra(FILE_TYPE_KEY);
-            String filename = data.getStringExtra(FILENAME_KEY);
+    private Intent generateFileSharingIntent(String fileType, String filename) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        if(fileType != null && fileType.equals(FILE_TYPE_CSV))
+            shareIntent.setType("text/plain");
 
-            Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-            if(fileType != null && fileType.equals(FILE_TYPE_CSV))
-                shareIntent.setType("message/rfc822");
-
-            shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, SHARE_SUBJECT);
-            shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, SHARE_EXTRA_TEXT);
-//            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filename)));
-
-            startActivityForResult(Intent.createChooser(shareIntent, SHARE_CHOOSER_TITLE), SHARE_REQUEST_CODE);
-        }
-
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, SHARE_SUBJECT);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, SHARE_EXTRA_TEXT);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filename)));
+        return shareIntent;
     }
 
     @Override
