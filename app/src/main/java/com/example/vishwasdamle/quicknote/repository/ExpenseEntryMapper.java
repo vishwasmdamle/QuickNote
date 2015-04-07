@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
 import com.example.vishwasdamle.quicknote.model.ExpenseType;
@@ -16,27 +15,12 @@ import java.util.ArrayList;
 /**
  * Created by vishwasdamle on 03/04/15.
  */
-public class ExpenseEntryMapper extends SQLiteOpenHelper {
-    private static final String UID = "uid";
-    private static final String TABLE_NAME = "ExpenseTable";
-    private static final String TIMESTAMP = "timestamp";
-    private static final String EXPENSE_TYPE = "type";
-    private static final String AMOUNT = "amount";
-    private static final String DESCRIPTION = "description";
-    private static final String DB_NAME = "QuickNote";
-    private static final String ACCOUNT = "account";
+public class ExpenseEntryMapper extends DatabaseBuilder {
+
+    public static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME_EXPENSE + " ORDER BY " + UID + " DESC";
 
     public ExpenseEntryMapper(Context context) {
-        super(context, DB_NAME, null, 1);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + UID + " INTEGER PRIMARY KEY, " + TIMESTAMP + ", " + EXPENSE_TYPE + ", " + AMOUNT + ", " + DESCRIPTION + ", " + ACCOUNT +  ")");
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
+        super(context);
     }
 
     public boolean insert(ExpenseEntry expenseEntry) {
@@ -44,7 +28,7 @@ public class ExpenseEntryMapper extends SQLiteOpenHelper {
 
         ContentValues contentValues = generateContentValues(expenseEntry);
 
-        return sqLiteDatabase.insert(TABLE_NAME, null, contentValues) != -1;
+        return sqLiteDatabase.insert(TABLE_NAME_EXPENSE, null, contentValues) != -1;
 
     }
 
@@ -60,7 +44,7 @@ public class ExpenseEntryMapper extends SQLiteOpenHelper {
 
     public ArrayList<ExpenseEntry> listAll() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = sqLiteDatabase.rawQuery(SELECT_QUERY, null);
         ArrayList<ExpenseEntry> expenseEntryArrayList = new ArrayList<>();
 
         cursor.moveToFirst();

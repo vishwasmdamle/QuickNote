@@ -21,6 +21,7 @@ import com.example.vishwasdamle.quicknote.adaptors.ButtonAdaptor;
 import com.example.vishwasdamle.quicknote.R;
 import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
 import com.example.vishwasdamle.quicknote.model.ExpenseType;
+import com.example.vishwasdamle.quicknote.service.AutoCompleteService;
 import com.example.vishwasdamle.quicknote.service.ExpenseService;
 
 import java.io.File;
@@ -36,9 +37,11 @@ public class Exp extends ActionBarActivity {
     public static final String SHARE_EXTRA_TEXT = "Expense statement generated using QuickNote";
     public static final String SHARE_CHOOSER_TITLE = "Send File via...";
     ExpenseService expenseService;
+    AutoCompleteService autoCompleteService;
 
     public Exp() {
         this.expenseService = new ExpenseService(this);
+        this.autoCompleteService = new AutoCompleteService(this);
     }
 
     @Override
@@ -186,6 +189,7 @@ public class Exp extends ActionBarActivity {
         if(expenseEntry == null) {
             return;
         }
+        autoCompleteService.add(expenseEntry.getDescription());
         if(expenseService.save(expenseEntry)) {
             Toast.makeText(this, R.string.Saved, Toast.LENGTH_SHORT).show();
         } else {
