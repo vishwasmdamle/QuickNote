@@ -32,6 +32,7 @@ import static android.view.View.*;
 import static android.widget.AdapterView.*;
 import static com.example.vishwasdamle.quicknote.model.Constants.*;
 import static com.example.vishwasdamle.quicknote.model.ExpenseType.*;
+import static com.example.vishwasdamle.quicknote.repository.StoredPreferences.*;
 
 
 public class Exp extends ActionBarActivity implements OnClickListener, OnItemClickListener {
@@ -77,7 +78,7 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
 
     private void setupAutoCompleteWords() {
         descriptionAdapter.clear();
-        if(AutoCompleteService.isEnabled()) {
+        if(isAutoCompleteEnabled(this)) {
             ArrayList<String> descriptionList = autoCompleteService.listAll();
             for(String descriptionElement : descriptionList) {
                 descriptionAdapter.add(descriptionElement);

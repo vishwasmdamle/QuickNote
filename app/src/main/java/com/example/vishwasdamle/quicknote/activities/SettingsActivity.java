@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.example.vishwasdamle.quicknote.R;
-import com.example.vishwasdamle.quicknote.service.AutoCompleteService;
 
+import static com.example.vishwasdamle.quicknote.repository.StoredPreferences.*;
 
 public class SettingsActivity extends ActionBarActivity {
 
@@ -16,11 +16,11 @@ public class SettingsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setSubtitle(R.string.Settings);
-        ((CheckBox)findViewById(R.id.toggleAutoComplete)).setChecked(AutoCompleteService.isEnabled());
+        ((CheckBox)findViewById(R.id.toggleAutoComplete)).setChecked(isAutoCompleteEnabled(this));
 
     }
 
     public void toggleAutoComplete(View view) {
-        AutoCompleteService.setEnabled(((CheckBox)findViewById(R.id.toggleAutoComplete)).isChecked());
+        setAutoCompleteEnabled(this, ((CheckBox)findViewById(R.id.toggleAutoComplete)).isChecked());
     }
 }

@@ -22,4 +22,5 @@ public class Constants {
     public static final String FILE_TYPE_KEY = "fileType";
     public static final String FILE_TYPE_CSV = "CSV";
     public static final String DB_NAME = "QuickNote";
+    public static final String STORED_PREFERENCES = "QuickNotePreferences";
 }
