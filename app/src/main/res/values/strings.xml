@@ -25,8 +25,10 @@
     <string name="Export">Export Document</string>
     <string name="ExportForSharing">Export Document For Sharing</string>
     <string name="Settings">Settings</string>
-    <string name="Settings.EnableAutoComplete">Suggestions for Description</string>
-    <string name="Settings.EnableAutoCompleteExtra">Enable Auto Complete Suggestions</string>
+    <string name="Settings.EnableAutoComplete">Text Suggestions</string>
+    <string name="Settings.EnableAutoCompleteExtra">Enable/Disable Auto Complete Suggestions</string>
+    <string name="Settings.EnableKeyboard">Number Pad</string>
+    <string name="Settings.EnableKeyboardExtra">Enable/Disable Number Pad</string>
 
     <string name="Exported">Document Exported Successfully</string>
     <string name="Saved">Saved</string>

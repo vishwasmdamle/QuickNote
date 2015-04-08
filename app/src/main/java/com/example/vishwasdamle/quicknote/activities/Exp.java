@@ -40,7 +40,6 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
     public static final String SHARE_SUBJECT = "Expense Statement";
     public static final String SHARE_EXTRA_TEXT = "Expense statement generated using QuickNote";
     public static final String SHARE_CHOOSER_TITLE = "Send File via...";
-    private ButtonAdaptor buttonAdaptor;
     private ArrayAdapter<String> descriptionAdapter;
     ExpenseService expenseService;
     AutoCompleteService autoCompleteService;
@@ -55,15 +54,26 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exp);
         initSpinner();
-        initNumPad();
         initAutoCompleteSuggestions();
     }
 
     private void initNumPad() {
-        GridView gridView = (GridView) findViewById(R.id.numPad);
-        buttonAdaptor = new ButtonAdaptor(this);
-        gridView.setAdapter(buttonAdaptor);
-        gridView.setOnItemClickListener(this);
+        if(isKeyboardEnabled(this)) {
+            GridView gridView = (GridView) findViewById(R.id.numPad);
+            ButtonAdaptor buttonAdaptor = new ButtonAdaptor(this);
+            gridView.setAdapter(buttonAdaptor);
+            gridView.setOnItemClickListener(this);
+
+            gridView.setVisibility(VISIBLE);
+            findViewById(R.id.amount).setFocusable(false);
+            findViewById(R.id.amount).setFocusableInTouchMode(false);
+        } else {
+            GridView gridView = (GridView) findViewById(R.id.numPad);
+            gridView.setVisibility(INVISIBLE);
+
+            findViewById(R.id.amount).setFocusable(true);
+            findViewById(R.id.amount).setFocusableInTouchMode(true);
+        }
     }
 
     private void initAutoCompleteSuggestions() {
@@ -90,6 +100,7 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
     protected void onResume() {
         super.onResume();
         setupAutoCompleteWords();
+        initNumPad();
     }
 
     private void initSpinner() {

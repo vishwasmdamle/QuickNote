@@ -17,10 +17,15 @@ public class SettingsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setSubtitle(R.string.Settings);
         ((CheckBox)findViewById(R.id.toggleAutoComplete)).setChecked(isAutoCompleteEnabled(this));
+        ((CheckBox)findViewById(R.id.toggleKeyboard)).setChecked(isKeyboardEnabled(this));
 
     }
 
     public void toggleAutoComplete(View view) {
         setAutoCompleteEnabled(this, ((CheckBox)findViewById(R.id.toggleAutoComplete)).isChecked());
+    }
+
+    public void toggleKeyboard(View view) {
+        setKeyboardEnabled(this, ((CheckBox)findViewById(R.id.toggleKeyboard)).isChecked());
     }
 }

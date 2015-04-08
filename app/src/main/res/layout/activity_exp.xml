@@ -52,7 +52,6 @@
             android:id="@+id/amount"
             android:layout_gravity="center_horizontal"
             android:inputType="text"
-            android:focusable="false"
             android:layout_toLeftOf="@+id/backspace"
             android:layout_toStartOf="@+id/backspace"
             android:textAlignment="gravity"
