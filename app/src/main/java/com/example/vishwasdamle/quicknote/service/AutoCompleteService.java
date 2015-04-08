@@ -12,6 +12,15 @@ import java.util.ArrayList;
 public class AutoCompleteService {
     private Context context;
     private AutoCompleteMapper autoCompleteMapper;
+    static boolean enabled = true;
+
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(boolean value) {
+        AutoCompleteService.enabled = value;
+    }
 
     public AutoCompleteService(Context context) {
         this.context = context;

@@ -69,8 +69,6 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
         MultiAutoCompleteTextView description = (MultiAutoCompleteTextView) findViewById(R.id.description);
         descriptionAdapter = new ArrayAdapter<>(this, simple_list_item_1);
 
-        setupAutoCompleteWords();
-
         description.setAdapter(descriptionAdapter);
         description.setOnClickListener(this);
         description.setThreshold(1);
@@ -78,11 +76,19 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
     }
 
     private void setupAutoCompleteWords() {
-        ArrayList<String> descriptionList = autoCompleteService.listAll();
         descriptionAdapter.clear();
-        for(String descriptionElement : descriptionList) {
-            descriptionAdapter.add(descriptionElement);
+        if(AutoCompleteService.isEnabled()) {
+            ArrayList<String> descriptionList = autoCompleteService.listAll();
+            for(String descriptionElement : descriptionList) {
+                descriptionAdapter.add(descriptionElement);
+            }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupAutoCompleteWords();
     }
 
     private void initSpinner() {
@@ -167,7 +173,7 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
             startActivityForResult(exportIntent, EXPORT_TO_SHARE_REQUEST_CODE);
         }
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

@@ -24,6 +24,9 @@
     <string name="Save">Save</string>
     <string name="Export">Export Document</string>
     <string name="ExportForSharing">Export Document For Sharing</string>
+    <string name="Settings">Settings</string>
+    <string name="Settings.EnableAutoComplete">Suggestions for Description</string>
+    <string name="Settings.EnableAutoCompleteExtra">Enable Auto Complete Suggestions</string>
 
     <string name="Exported">Document Exported Successfully</string>
     <string name="Saved">Saved</string>
