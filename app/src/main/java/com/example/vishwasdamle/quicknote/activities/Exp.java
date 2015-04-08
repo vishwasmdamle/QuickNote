@@ -27,15 +27,20 @@ import com.example.vishwasdamle.quicknote.service.ExpenseService;
 import java.io.File;
 import java.util.ArrayList;
 
+import static android.R.layout.*;
+import static android.view.View.*;
 import static android.widget.AdapterView.*;
 import static com.example.vishwasdamle.quicknote.model.Constants.*;
+import static com.example.vishwasdamle.quicknote.model.ExpenseType.*;
 
 
-public class Exp extends ActionBarActivity {
+public class Exp extends ActionBarActivity implements OnClickListener, OnItemClickListener {
 
     public static final String SHARE_SUBJECT = "Expense Statement";
     public static final String SHARE_EXTRA_TEXT = "Expense statement generated using QuickNote";
     public static final String SHARE_CHOOSER_TITLE = "Send File via...";
+    private ButtonAdaptor buttonAdaptor;
+    private ArrayAdapter<String> descriptionAdapter;
     ExpenseService expenseService;
     AutoCompleteService autoCompleteService;
 
@@ -48,49 +53,44 @@ public class Exp extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exp);
-        Spinner spinner = (Spinner) findViewById(R.id.expenseType);
+        initSpinner();
+        initNumPad();
+        initAutoCompleteSuggestions();
+    }
+
+    private void initNumPad() {
         GridView gridView = (GridView) findViewById(R.id.numPad);
-        MultiAutoCompleteTextView description = (MultiAutoCompleteTextView) findViewById(R.id.description);
-        initSpinner(spinner);
-        initNumPad(gridView);
-        setupAutoCompleteSuggestions(description);
-    }
-
-    private void initNumPad(GridView gridView) {
-        ButtonAdaptor buttonAdaptor = new ButtonAdaptor(this);
+        buttonAdaptor = new ButtonAdaptor(this);
         gridView.setAdapter(buttonAdaptor);
-
-        OnItemClickListener numPadListener = new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                EditText amount = (EditText) findViewById(R.id.amount);
-                amount.setText(amount.getText().toString() + ((Button) view.findViewById(R.id.numPadKey)).getText());
-            }
-        };
-        gridView.setOnItemClickListener(numPadListener);
+        gridView.setOnItemClickListener(this);
     }
 
-    private void setupAutoCompleteSuggestions(final MultiAutoCompleteTextView description) {
-        String[] descriptions = new String[]{"sample1", "sample2", "example1", "example2"};
-        ArrayAdapter<String> descriptionAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, descriptions);
+    private void initAutoCompleteSuggestions() {
+        MultiAutoCompleteTextView description = (MultiAutoCompleteTextView) findViewById(R.id.description);
+        descriptionAdapter = new ArrayAdapter<>(this, simple_list_item_1);
+
+        setupAutoCompleteWords();
+
         description.setAdapter(descriptionAdapter);
-        description.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                description.showDropDown();
-            }
-        });
+        description.setOnClickListener(this);
         description.setThreshold(1);
         description.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 
-    private void initSpinner(Spinner spinner) {
-        ArrayList<String> SpinnerOptions = ExpenseType.getStringValues(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, SpinnerOptions);
+    private void setupAutoCompleteWords() {
+        ArrayList<String> descriptionList = autoCompleteService.listAll();
+        descriptionAdapter.clear();
+        for(String descriptionElement : descriptionList) {
+            descriptionAdapter.add(descriptionElement);
+        }
+    }
+
+    private void initSpinner() {
+        Spinner spinner = (Spinner) findViewById(R.id.expenseType);
+        ArrayList<String> SpinnerOptions = getStringValues(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, simple_spinner_dropdown_item, SpinnerOptions);
         spinner.setAdapter(adapter);
-        String debitStringValue = getResources().getString(ExpenseType.DEBIT.getStringId());
+        String debitStringValue = getResources().getString(DEBIT.getStringId());
         spinner.setSelection(adapter.getPosition(debitStringValue), false);
     }
 
@@ -142,41 +142,30 @@ public class Exp extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_exp, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        System.out.println("item = [" + item + "]");
-        System.out.println("item.getTitle() = " + item.getTitle());
-
         if(id == R.id.export) {
-            System.out.println("export");
             Intent exportIntent = new Intent(this, ExportActivity.class);
             exportIntent.putExtra(REQUEST_CODE_KEY, EXPORT_REQUEST_CODE);
             startActivityForResult(exportIntent, EXPORT_REQUEST_CODE);
         }
 
         if(id == R.id.review) {
-            System.out.println("review");
             Intent exportIntent = new Intent(this, ListActivity.class);
             exportIntent.putExtra(REQUEST_CODE_KEY, LIST_REQUEST_CODE);
             startActivityForResult(exportIntent, LIST_REQUEST_CODE);
         }
 
         if(id == R.id.share) {
-            System.out.println("share");
             Intent exportIntent = new Intent(this, ExportActivity.class);
             exportIntent.putExtra(REQUEST_CODE_KEY, EXPORT_TO_SHARE_REQUEST_CODE);
             startActivityForResult(exportIntent, EXPORT_TO_SHARE_REQUEST_CODE);
         }
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -187,9 +176,12 @@ public class Exp extends ActionBarActivity {
     public void save(View view) {
         ExpenseEntry expenseEntry = generateExpenseEntry();
         if(expenseEntry == null) {
+            Toast.makeText(this, getString(R.string.fieldErrorMessage), Toast.LENGTH_LONG).show();
             return;
         }
         autoCompleteService.add(expenseEntry.getDescription());
+        setupAutoCompleteWords();
+
         if(expenseService.save(expenseEntry)) {
             Toast.makeText(this, R.string.Saved, Toast.LENGTH_SHORT).show();
         } else {
@@ -207,24 +199,18 @@ public class Exp extends ActionBarActivity {
         Spinner expenseType = (Spinner) findViewById(R.id.expenseType);
         TextView descriptionTextView = (TextView) findViewById(R.id.description);
         TextView amountTextView = (TextView) findViewById(R.id.amount);
-        Toast toast = Toast.makeText(this, getString(R.string.fieldErrorMessage), Toast.LENGTH_LONG);
 
-        ExpenseType selectedType = ExpenseType.values()[expenseType.getSelectedItemPosition()];
+        ExpenseType selectedType = values()[expenseType.getSelectedItemPosition()];
         String amountString = String.valueOf(amountTextView.getText());
-        Double amount;
-        if(amountString.matches(REGEX_DOUBLE)) {
-            amount = Double.parseDouble(amountString);
-        } else {
-            toast.show();
-            return null;
-        }
         String description = String.valueOf(descriptionTextView.getText());
-        if(!description.isEmpty()) {
-            description = description.replaceAll("\\s*,\\s*$", "");
-        } else {
-            toast.show();
+        Double amount;
+
+        if (!amountString.matches(REGEX_DOUBLE) || description.isEmpty()) {
             return null;
         }
+        amount = Double.parseDouble(amountString);
+        description = description.replaceAll("\\s*,\\s*$", "");
+
         return new ExpenseEntry(selectedType, amount, description);
     }
 
@@ -232,5 +218,22 @@ public class Exp extends ActionBarActivity {
         EditText amount = (EditText) findViewById(R.id.amount);
         String text = String.valueOf(amount.getText());
         if(text.length() > 0) amount.setText(text.substring(0, text.length() - 1));
+    }
+
+    @Override
+    public void onClick(View view) {
+        MultiAutoCompleteTextView description = (MultiAutoCompleteTextView) findViewById(R.id.description);
+        if(view == description) {
+            description.showDropDown();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        GridView gridView = (GridView) findViewById(R.id.numPad);
+        EditText amount = (EditText) findViewById(R.id.amount);
+        if(adapterView == gridView) {
+            amount.setText(amount.getText().toString() + ((Button) view.findViewById(R.id.numPadKey)).getText());
+        }
     }
 }

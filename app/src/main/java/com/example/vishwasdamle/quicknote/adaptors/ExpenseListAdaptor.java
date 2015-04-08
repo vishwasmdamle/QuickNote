@@ -48,12 +48,13 @@ public class ExpenseListAdaptor extends BaseAdapter {
         }
         ExpenseEntry currentExpense = expenseEntryList.get(i);
 
+        TextView expenseTypeText = (TextView) view.findViewById(R.id.type);
         if(currentExpense.getExpenseType() == ExpenseType.DEBIT) {
-            ((TextView)view.findViewById(R.id.type)).setTextColor(context.getResources().getColor(R.color.red_light));
-        }
-
-        if(currentExpense.getExpenseType() == ExpenseType.CREDIT) {
-            ((TextView)view.findViewById(R.id.type)).setTextColor(context.getResources().getColor(R.color.green_light));
+            expenseTypeText.setTextColor(context.getResources().getColor(R.color.red_light));
+        } else if(currentExpense.getExpenseType() == ExpenseType.CREDIT) {
+            expenseTypeText.setTextColor(context.getResources().getColor(R.color.green_light));
+        } else {
+            expenseTypeText.setTextColor(context.getResources().getColor(android.R.color.primary_text_dark));
         }
 
         String expenseType = String.valueOf(currentExpense.getExpenseType().toString().charAt(0));
