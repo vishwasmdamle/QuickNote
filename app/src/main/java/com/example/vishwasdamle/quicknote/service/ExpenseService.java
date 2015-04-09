@@ -26,4 +26,8 @@ public class ExpenseService {
     public ArrayList<ExpenseEntry> listAll() {
         return expenseEntryMapper.listAll();
     }
+
+    public void deleteAll() {
+        expenseEntryMapper.deleteAll();
+    }
 }

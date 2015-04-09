@@ -2,14 +2,18 @@ package com.example.vishwasdamle.quicknote.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.example.vishwasdamle.quicknote.R;
 import com.example.vishwasdamle.quicknote.service.AutoCompleteService;
+import com.example.vishwasdamle.quicknote.service.ExpenseService;
 
+import static com.example.vishwasdamle.quicknote.model.Constants.EXPORT_REQUEST_CODE;
 import static com.example.vishwasdamle.quicknote.repository.StoredPreferences.*;
 
 public class SettingsActivity extends ActionBarActivity {
@@ -29,20 +33,40 @@ public class SettingsActivity extends ActionBarActivity {
         setAutoCompleteEnabled(this, ((CheckBox) findViewById(R.id.toggleAutoComplete)).isChecked());
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == EXPORT_REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
+                deleteData();
+            } else {
+                Toast.makeText(this, R.string.FailedToExport, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.DataNotDeleted, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public void toggleKeyboard(View view) {
         ((CheckBox)findViewById(R.id.toggleKeyboard)).toggle();
-        setKeyboardEnabled(this, ((CheckBox)findViewById(R.id.toggleKeyboard)).isChecked());
+        setKeyboardEnabled(this, ((CheckBox) findViewById(R.id.toggleKeyboard)).isChecked());
     }
 
     public void showDeleteSuggestionsPopup(View view) {
-        showDialog();
+        showACDialog();
     }
 
     public void deleteSuggestions() {
         new AutoCompleteService(this).deleteAll();
     }
 
-    private void showDialog() {
+    public void deleteData() {
+        new ExpenseService(this).deleteAll();
+    }
+
+    public void showDeleteDataPopup(View view) {
+        showDataDialog();
+    }
+
+    private void showACDialog() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.clearACTitle)
                 .setMessage(R.string.clearACMessage)
@@ -55,6 +79,31 @@ public class SettingsActivity extends ActionBarActivity {
                 .setNegativeButton(R.string.ButtonNo, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .show();
+    }
+
+    private void showDataDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.clearDataTitle)
+                .setMessage(R.string.clearDataMessage)
+                .setPositiveButton(R.string.ButtonExportAndDelete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent exportIntent = new Intent(getApplicationContext(), ExportActivity.class);
+                        startActivityForResult(exportIntent, EXPORT_REQUEST_CODE);
+                    }
+                })
+                .setNegativeButton(R.string.ButtonNo, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setNeutralButton(R.string.ButtonYes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteData();
                     }
                 })
                 .show();

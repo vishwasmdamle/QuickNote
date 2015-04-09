@@ -35,6 +35,9 @@
     <string name="Settings.EnableKeyboardExtra">Enable/Disable Number Pad</string>
     <string name="Settings.clearSuggestions">Clear Suggestions</string>
     <string name="Settings.clearSuggestionsExtra">Clear and Reset Suggestions History</string>
+    <string name="Settings.clearData">Clear Data</string>
+    <string name="Settings.clearDataExtra">Clear Stored Expense Records</string>
+    <string name="ButtonExportAndDelete">Export And Delete</string>
 
     <string name="Exported">Document Exported Successfully</string>
     <string name="Saved">Saved</string>
@@ -43,6 +46,7 @@
     <string name="FailedToExport">Failed To Export Document</string>
     <string name="FailedToSave">Failed To Save</string>
     <string name="FailedToShare">Failed To Share Document</string>
+    <string name="DataNotDeleted">Data Not Deleted</string>
 
     <string name="fieldErrorMessage">Please Enter Correct Fields!</string>
     <string name="Share">Share</string>
@@ -52,5 +56,7 @@
 
     <string name="clearACTitle">Clear Suggestions</string>
     <string name="clearACMessage">Do You Want To Clear and Reset Suggestions History?</string>
+    <string name="clearDataTitle">Clear Data</string>
+    <string name="clearDataMessage">Do You Want To Clear All Stored Expense Records?</string>
 
 </resources>

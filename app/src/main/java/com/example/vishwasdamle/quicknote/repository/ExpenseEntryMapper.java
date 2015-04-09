@@ -17,7 +17,8 @@ import java.util.ArrayList;
  */
 public class ExpenseEntryMapper extends DatabaseBuilder {
 
-    public static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME_EXPENSE + " ORDER BY " + UID + " DESC";
+    private static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME_EXPENSE + " ORDER BY " + UID + " DESC";
+    private static final String DELETE_QUERY = "DELETE FROM " + TABLE_NAME_EXPENSE;
 
     public ExpenseEntryMapper(Context context) {
         super(context);
@@ -63,5 +64,11 @@ public class ExpenseEntryMapper extends DatabaseBuilder {
             cursor.moveToNext();
         }
         return expenseEntryArrayList;
+    }
+
+    public void deleteAll() {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL(DELETE_QUERY);
+        sqLiteDatabase.close();
     }
 }
