@@ -25,6 +25,9 @@
     <string name="ButtonCancel">Cancel</string>
     <string name="ButtonNo">No</string>
 
+    <string name="descriptionHint">Description/Notes</string>
+    <string name="amountHint">Amount</string>
+
     <string name="Save">Save</string>
     <string name="Export">Export Document</string>
     <string name="ExportForSharing">Export Document For Sharing</string>
