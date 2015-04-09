@@ -15,6 +15,7 @@ public class AutoCompleteMapper extends DatabaseBuilder {
 
     public static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME_AUTOCOMPLETE + " ORDER BY " + OCCURRENCE + " DESC";
     public static final String UPDATE_QUERY = "UPDATE " + TABLE_NAME_AUTOCOMPLETE + " SET " + OCCURRENCE + " = " + OCCURRENCE + "+1 WHERE " + WORD + " = ?";
+    private static final String DELETE_QUERY = "DELETE FROM " + TABLE_NAME_AUTOCOMPLETE;
 
     public AutoCompleteMapper(Context context) {
         super(context);
@@ -32,6 +33,7 @@ public class AutoCompleteMapper extends DatabaseBuilder {
                 sqLiteDatabase.execSQL(UPDATE_QUERY, new String[]{word});
             }
         }
+        sqLiteDatabase.close();
     }
 
     public ArrayList<String> listAll() {
@@ -44,6 +46,13 @@ public class AutoCompleteMapper extends DatabaseBuilder {
             wordList.add(cursor.getString(cursor.getColumnIndex(WORD)));
             cursor.moveToNext();
         }
+        sqLiteDatabase.close();
         return wordList;
+    }
+
+    public void deleteAll() {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL(DELETE_QUERY);
+        sqLiteDatabase.close();
     }
 }

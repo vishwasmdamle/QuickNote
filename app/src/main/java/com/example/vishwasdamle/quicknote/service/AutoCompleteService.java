@@ -28,4 +28,8 @@ public class AutoCompleteService {
     public ArrayList<String> listAll() {
         return autoCompleteMapper.listAll();
     }
+
+    public void deleteAll() {
+        autoCompleteMapper.deleteAll();
+    }
 }

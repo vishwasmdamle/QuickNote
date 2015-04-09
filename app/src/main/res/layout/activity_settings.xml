@@ -13,7 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:background="@drawable/clickable"
+        android:onClick="toggleAutoComplete" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -51,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/toggleAutoComplete"
                 android:checked="true"
-                android:onClick="toggleAutoComplete" />
+                android:clickable="false" />
         </LinearLayout>
 
     </LinearLayout>
@@ -60,7 +63,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:background="@drawable/clickable"
+        android:onClick="toggleKeyboard" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -97,7 +103,54 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/toggleKeyboard"
                 android:checked="true"
-                android:onClick="toggleKeyboard" />
+                android:clickable="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:background="@drawable/clickable"
+        android:onClick="showDeleteSuggestionsPopup" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="7"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/Settings.clearSuggestions"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/Settings.clearSuggestionsExtra"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:enabled="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@android:drawable/ic_menu_delete" />
         </LinearLayout>
     </LinearLayout>
 

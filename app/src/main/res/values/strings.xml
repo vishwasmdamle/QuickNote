@@ -21,6 +21,10 @@
 
     <string name="title_activity_num_pad_button">NumPadButton</string>
 
+    <string name="ButtonYes">Yes</string>
+    <string name="ButtonCancel">Cancel</string>
+    <string name="ButtonNo">No</string>
+
     <string name="Save">Save</string>
     <string name="Export">Export Document</string>
     <string name="ExportForSharing">Export Document For Sharing</string>
@@ -29,6 +33,8 @@
     <string name="Settings.EnableAutoCompleteExtra">Enable/Disable Auto Complete Suggestions</string>
     <string name="Settings.EnableKeyboard">Number Pad</string>
     <string name="Settings.EnableKeyboardExtra">Enable/Disable Number Pad</string>
+    <string name="Settings.clearSuggestions">Clear Suggestions</string>
+    <string name="Settings.clearSuggestionsExtra">Clear and Reset Suggestions History</string>
 
     <string name="Exported">Document Exported Successfully</string>
     <string name="Saved">Saved</string>
@@ -44,6 +50,7 @@
     <string name="ReviewEntries">Review Entries</string>
     <string name="title_activity_list">ListActivity</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="clearACTitle">Clear Suggestions</string>
+    <string name="clearACMessage">Do You Want To Clear and Reset Suggestions History?</string>
 
 </resources>

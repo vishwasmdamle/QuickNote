@@ -40,7 +40,6 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
     public static final String SHARE_SUBJECT = "Expense Statement";
     public static final String SHARE_EXTRA_TEXT = "Expense statement generated using QuickNote";
     public static final String SHARE_CHOOSER_TITLE = "Send File via...";
-    private ArrayAdapter<String> descriptionAdapter;
     ExpenseService expenseService;
     AutoCompleteService autoCompleteService;
 
@@ -78,22 +77,20 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
 
     private void initAutoCompleteSuggestions() {
         MultiAutoCompleteTextView description = (MultiAutoCompleteTextView) findViewById(R.id.description);
-        descriptionAdapter = new ArrayAdapter<>(this, simple_list_item_1);
-
-        description.setAdapter(descriptionAdapter);
         description.setOnClickListener(this);
         description.setThreshold(1);
         description.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 
     private void setupAutoCompleteWords() {
-        descriptionAdapter.clear();
+        ArrayAdapter<String> descriptionAdapter;
         if(isAutoCompleteEnabled(this)) {
-            ArrayList<String> descriptionList = autoCompleteService.listAll();
-            for(String descriptionElement : descriptionList) {
-                descriptionAdapter.add(descriptionElement);
-            }
+            descriptionAdapter = new ArrayAdapter<>(this, simple_list_item_1, autoCompleteService.listAll());
+        } else {
+            descriptionAdapter = new ArrayAdapter<>(this, simple_list_item_1, new ArrayList<String>());
         }
+        ((MultiAutoCompleteTextView) findViewById(R.id.description)).setAdapter(descriptionAdapter);
+
     }
 
     @Override
