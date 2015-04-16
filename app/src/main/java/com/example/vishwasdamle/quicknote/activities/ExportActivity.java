@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.vishwasdamle.quicknote.R;
 import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
@@ -42,21 +45,31 @@ public class ExportActivity extends ActionBarActivity {
             getSupportActionBar().setSubtitle(R.string.Export);
         else
             getSupportActionBar().setSubtitle(R.string.ExportForSharing);
+        String filename = FILENAME_PREFIX +  new DateTime().toString(DATE_TIME_PATTERN_FILE);
+        ((EditText) findViewById(R.id.filename)).setText(filename);
     }
 
     public void exportEntries(View view) {
-        ArrayList<ExpenseEntry> expenseEntries = generateRecords();
-        String filename = FILENAME_PREFIX +  new DateTime().toString(DATE_TIME_PATTERN_FILE);
-
-        File file = exportToCSV(expenseEntries, filename);
-        if(file != null) {
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(FILENAME_KEY, file.getPath());
-            resultIntent.putExtra(FILE_TYPE_KEY, FILE_TYPE_CSV);
-            this.setResult(RESULT_OK, resultIntent);
+        String filename = ((EditText) findViewById(R.id.filename)).getText().toString();
+        if(filename.equals("")) {
+            Toast.makeText(this, R.string.fieldErrorMessage, Toast.LENGTH_SHORT).show();
+        } else {
+            filename = filename.concat(CSV_EXTENSION);
+            if(fileService.exists(CSV_DIRECTORY, filename)) {
+                Toast.makeText(this, R.string.FileExists, Toast.LENGTH_SHORT).show();
+            } else {
+                ArrayList<ExpenseEntry> expenseEntries = generateRecords();
+                File file = exportToCSV(expenseEntries, filename);
+                if(file != null) {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(FILENAME_KEY, file.getPath());
+                    resultIntent.putExtra(FILE_TYPE_KEY, FILE_TYPE_CSV);
+                    this.setResult(RESULT_OK, resultIntent);
+                }
+                System.out.println("exported");
+                finish();
+            }
         }
-        System.out.println("exported");
-        finish();
     }
 
     private ArrayList<ExpenseEntry> generateRecords() {
@@ -69,7 +82,7 @@ public class ExportActivity extends ActionBarActivity {
             fileContent.append(entry.getCSVPrintable());
         }
 
-        File file = fileService.getFile(CSV_DIRECTORY, filename + CSV_EXTENSION);
+        File file = fileService.getFile(CSV_DIRECTORY, filename);
         if(file == null) return null;
         if(!fileService.writeToFile(file, fileContent.toString())) return null;
         return file;

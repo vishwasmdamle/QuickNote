@@ -25,7 +25,7 @@
     <string name="ButtonCancel">Cancel</string>
     <string name="ButtonNo">No</string>
 
-    <string name="descriptionHint">Description/Notes</string>
+    <string name="descriptionHint">Description / Notes</string>
     <string name="amountHint">Amount</string>
 
     <string name="Save">Save</string>
@@ -61,5 +61,8 @@
     <string name="clearACMessage">Do You Want To Clear and Reset Suggestions History?</string>
     <string name="clearDataTitle">Clear Data</string>
     <string name="clearDataMessage">Do You Want To Clear All Stored Expense Records?</string>
+    <string name="FileExists">File Already Exists!</string>
+    <string name="CSV">CSV</string>
+    <string name="PDF">PDF</string>
 
 </resources>

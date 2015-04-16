@@ -57,4 +57,8 @@ public class FileService {
             }
             return true;
     }
+
+    public boolean exists(String directory, String filename) {
+        return getFile(directory, filename).exists();
+    }
 }
