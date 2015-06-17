@@ -1,97 +1,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    android:layout_height="fill_parent"
-    android:weightSum="1">
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="R"
-                android:id="@+id/type"
-                android:gravity="center_vertical|center_horizontal" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="2">
-
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="100000.00"
-                android:id="@+id/amount"
-                android:gravity="center_vertical|end"
-                android:paddingRight="@dimen/text_padding" />
-        </LinearLayout>
+                android:descendantFocusability="blocksDescendants"
+                android:weightSum="1">
 
-        <HorizontalScrollView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/horizontalScrollView"
-            android:layout_weight="4">
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:orientation="horizontal">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="R"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".5">
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:gravity="center_vertical|end"
+        android:paddingRight="@dimen/text_padding"
+        android:text="100000.00"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Some Really long description"
-                        android:id="@+id/description"
-                        android:nestedScrollingEnabled="false"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/text_padding" />
-                </LinearLayout>
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".5">
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="1 May 2000, 12:59AM"
-                        android:id="@+id/timestamp"
-                        android:gravity="center_vertical"
-                        android:enabled="false"
-                        android:padding="@dimen/text_padding" />
-                </LinearLayout>
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:nestedScrollingEnabled="false"
+            android:padding="@dimen/text_padding"
+            android:text="Some Really long description"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            </LinearLayout>
-        </HorizontalScrollView>
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:gravity="center_vertical"
+            android:padding="@dimen/text_padding"
+            android:text="1 May 2000, 12:59AM"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+      </LinearLayout>
+    </HorizontalScrollView>
 
-    </LinearLayout>
+  </LinearLayout>
 </RelativeLayout>
