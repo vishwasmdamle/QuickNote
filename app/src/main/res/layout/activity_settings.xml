@@ -1,204 +1,201 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.vishwasdamle.quicknote.activities.SettingsActivity" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="@dimen/activity_margin"
+              tools:context="com.example.vishwasdamle.quicknote.activities.SettingsActivity">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:background="@drawable/clickable"
+      android:clickable="true"
+      android:onClick="toggleAutoComplete"
+      android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/clickable"
-        android:onClick="toggleAutoComplete" >
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="7"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="7"
-            android:orientation="vertical">
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.EnableAutoComplete"
+          android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.EnableAutoComplete"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.EnableAutoCompleteExtra"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:enabled="false" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/toggleAutoComplete"
-                android:checked="true"
-                android:clickable="false" />
-        </LinearLayout>
-
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:enabled="false"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.EnableAutoCompleteExtra"
+          android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/clickable"
-        android:onClick="toggleKeyboard" >
+        android:weightSum="1">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="7"
-            android:orientation="vertical" >
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.EnableKeyboard"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+      <CheckBox
+          android:id="@+id/toggleAutoComplete"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:checked="true"
+          android:clickable="false"/>
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.EnableKeyboardExtra"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:enabled="false" />
-        </LinearLayout>
+  </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="1" >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:background="@drawable/clickable"
+      android:clickable="true"
+      android:onClick="toggleKeyboard"
+      android:orientation="horizontal">
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/toggleKeyboard"
-                android:checked="true"
-                android:clickable="false" />
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="7"
+        android:orientation="vertical">
+
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.EnableKeyboard"
+          android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:enabled="false"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.EnableKeyboardExtra"
+          android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/clickable"
-        android:onClick="showDeleteSuggestionsPopup" >
+        android:weightSum="1">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="7"
-            android:orientation="vertical" >
+      <CheckBox
+          android:id="@+id/toggleKeyboard"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:checked="true"
+          android:clickable="false"/>
+    </LinearLayout>
+  </LinearLayout>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.clearSuggestions"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:background="@drawable/clickable"
+      android:clickable="true"
+      android:onClick="showDeleteSuggestionsPopup"
+      android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.clearSuggestionsExtra"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:enabled="false" />
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="7"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="1" >
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.clearSuggestions"
+          android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:src="@android:drawable/ic_menu_delete" />
-        </LinearLayout>
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:enabled="false"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.clearSuggestionsExtra"
+          android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
-        android:clickable="true"
-        android:background="@drawable/clickable"
-        android:onClick="showDeleteDataPopup" >
+        android:weightSum="1">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="7"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.clearData"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:text="@string/Settings.clearDataExtra"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:enabled="false" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="1" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@android:drawable/ic_menu_delete" />
-        </LinearLayout>
+      <ImageView
+          android:id="@+id/imageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@android:drawable/ic_menu_delete"/>
     </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:background="@drawable/clickable"
+      android:clickable="true"
+      android:onClick="showDeleteDataPopup"
+      android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="7"
+        android:orientation="vertical">
+
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.clearData"
+          android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:enabled="false"
+          android:padding="@dimen/text_padding"
+          android:text="@string/Settings.clearDataExtra"
+          android:textAppearance="?android:attr/textAppearanceSmall"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+      <ImageView
+          android:id="@+id/imageView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@android:drawable/ic_menu_delete"/>
+    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

@@ -64,5 +64,6 @@
     <string name="FileExists">File Already Exists!</string>
     <string name="CSV">CSV</string>
     <string name="PDF">PDF</string>
+    <string name="balance_label">BALANCE :</string>
 
 </resources>
