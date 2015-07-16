@@ -27,4 +27,8 @@ public class ExpenseService {
   public void deleteAll() {
     expenseEntryMapper.deleteAll();
   }
+
+  public void delete(long uid) {
+    expenseEntryMapper.delete(uid);
+  }
 }

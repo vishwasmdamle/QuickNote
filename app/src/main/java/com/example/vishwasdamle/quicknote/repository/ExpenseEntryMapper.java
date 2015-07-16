@@ -14,8 +14,11 @@ import java.util.ArrayList;
 
 public class ExpenseEntryMapper extends DatabaseBuilder {
 
-  private static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME_EXPENSE + " ORDER BY " + UID + " DESC";
-  private static final String DELETE_QUERY = "DELETE FROM " + TABLE_NAME_EXPENSE;
+  private static final String SELECT_ALL_QUERY = "SELECT * FROM " + TABLE_NAME_EXPENSE
+      + " ORDER BY " + UID + " DESC";
+  private static final String DELETE_ALL_QUERY = "DELETE FROM " + TABLE_NAME_EXPENSE;
+  private static final String DELETE_QUERY = "DELETE FROM " + TABLE_NAME_EXPENSE
+      + " WHERE " + UID + "=";
 
   public ExpenseEntryMapper(Context context) {
     super(context);
@@ -42,7 +45,7 @@ public class ExpenseEntryMapper extends DatabaseBuilder {
 
   public ArrayList<ExpenseEntry> listAll() {
     SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-    Cursor cursor = sqLiteDatabase.rawQuery(SELECT_QUERY, null);
+    Cursor cursor = sqLiteDatabase.rawQuery(SELECT_ALL_QUERY, null);
     ArrayList<ExpenseEntry> expenseEntryArrayList = new ArrayList<>();
 
     cursor.moveToFirst();
@@ -65,7 +68,19 @@ public class ExpenseEntryMapper extends DatabaseBuilder {
 
   public void deleteAll() {
     SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-    sqLiteDatabase.execSQL(DELETE_QUERY);
+    sqLiteDatabase.execSQL(DELETE_ALL_QUERY);
     sqLiteDatabase.close();
+  }
+
+  public void delete(long uid) {
+    SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+    String sql = deleteByIdQuery(uid);
+    System.out.println("sql = " + sql);
+    sqLiteDatabase.execSQL(sql);
+    sqLiteDatabase.close();
+  }
+
+  private String deleteByIdQuery(long uid) {
+    return DELETE_QUERY + uid;
   }
 }

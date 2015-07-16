@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="red_light">#ffaaaa</color>
-    <color name="green_light">#aaffaa</color>
+    <color name="red_light">#FFAAAA</color>
+    <color name="green_light">#AAFFAA</color>
+    <color name="activated_light">#44AAAAAA</color>
 </resources>

@@ -65,5 +65,9 @@
     <string name="CSV">CSV</string>
     <string name="PDF">PDF</string>
     <string name="balance_label">BALANCE :</string>
+    <string name="delete_entry">Delete Entry</string>
+    <string name="delete_records">Delete Records</string>
+    <string name="items_selected">items selected</string>
+    <string name="item_selected">item selected</string>
 
 </resources>
