@@ -45,6 +45,11 @@ public class ExpenseListAdaptor extends BaseAdapter {
     }
     ExpenseEntry currentExpense = expenseEntryList.get(i);
 
+    buildView(view, currentExpense);
+    return view;
+  }
+
+  private void buildView(final View view, ExpenseEntry currentExpense) {
     TextView expenseTypeText = (TextView) view.findViewById(R.id.type);
     if (currentExpense.getExpenseType() == ExpenseType.DEBIT) {
       expenseTypeText.setTextColor(context.getResources().getColor(R.color.red_light));
@@ -59,6 +64,5 @@ public class ExpenseListAdaptor extends BaseAdapter {
     ((TextView) view.findViewById(R.id.amount)).setText(currentExpense.getAmount().toString());
     ((TextView) view.findViewById(R.id.description)).setText(currentExpense.getDescription());
     ((TextView) view.findViewById(R.id.timestamp)).setText(currentExpense.getTimeStamp().toString(Constants.DATE_TIME_PATTERN_DISPLAY));
-    return view;
   }
 }

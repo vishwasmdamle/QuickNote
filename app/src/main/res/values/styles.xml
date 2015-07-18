@@ -4,4 +4,11 @@
   <style name="AppTheme" parent="Theme.AppCompat">
     <!-- Customize your theme here. -->
   </style>
+
+  <style name="one_line_text">
+    <item name="android:layout_margin">@dimen/text_padding</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:singleLine">true</item>
+  </style>
 </resources>

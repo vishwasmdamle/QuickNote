@@ -33,8 +33,12 @@ public class ListActivity extends ActionBarActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list);
-    expenseList = (ListView) findViewById(R.id.expenseList);
+  }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    expenseList = (ListView) findViewById(R.id.expenseList);
     setupData();
     attachLongClickBehavior();
   }

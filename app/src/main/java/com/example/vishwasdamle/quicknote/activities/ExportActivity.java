@@ -68,7 +68,6 @@ public class ExportActivity extends ActionBarActivity {
           resultIntent.putExtra(FILE_TYPE_KEY, FILE_TYPE_CSV);
           this.setResult(RESULT_OK, resultIntent);
         }
-        System.out.println("exported");
         finish();
       }
     }
