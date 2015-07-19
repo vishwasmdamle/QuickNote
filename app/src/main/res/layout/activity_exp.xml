@@ -4,7 +4,6 @@
                 android:layout_height="fill_parent"
                 android:background="@color/background_material_dark"
                 android:orientation="vertical"
-                android:outlineProvider="background"
                 android:padding="@dimen/activity_margin"
                 android:weightSum="1"
                 tools:context=".Exp">

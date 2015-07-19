@@ -3,64 +3,51 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:paddingTop="@dimen/activity_margin">
+              android:padding="@dimen/activity_margin">
 
-  <View
+  <EditText
+      android:id="@+id/description"
       android:layout_width="match_parent"
-      android:layout_height="2dp"
-      android:background="@android:color/white"/>
+      android:layout_height="wrap_content"/>
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="@dimen/activity_margin">
+      android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
+    <com.example.vishwasdamle.quicknote.views.ExpenseTypeSpinner
+        android:id="@+id/expenseType"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/amount"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-      <com.example.vishwasdamle.quicknote.views.ExpenseTypeSpinner
-          android:id="@+id/expenseType"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
-
-      <EditText
-          android:id="@+id/amount"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_margin"
-        android:orientation="horizontal">
-
-      <Button
-          android:id="@+id/save_button"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="@string/ButtonSave"
-          android:textColor="@color/accent_material_dark"/>
-
-      <Button
-          android:id="@+id/cancel_button"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="@string/ButtonCancel"/>
-
-    </LinearLayout>
+        android:layout_weight="1"/>
   </LinearLayout>
 
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/activity_margin"
+      android:orientation="horizontal">
 
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/ButtonSave"
+        android:textColor="@color/accent_material_dark"/>
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"
+        android:text="@string/ButtonCancel"/>
+
+  </LinearLayout>
 </LinearLayout>

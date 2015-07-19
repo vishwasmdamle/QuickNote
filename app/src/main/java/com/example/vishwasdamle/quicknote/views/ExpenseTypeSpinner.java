@@ -1,9 +1,9 @@
 package com.example.vishwasdamle.quicknote.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.example.vishwasdamle.quicknote.model.ExpenseType;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static android.R.layout.simple_spinner_dropdown_item;
 import static com.example.vishwasdamle.quicknote.model.ExpenseType.DEBIT;
 
-public class ExpenseTypeSpinner extends Spinner {
+public class ExpenseTypeSpinner extends AppCompatSpinner {
 
   private final ArrayAdapter<String> adapter;
 
