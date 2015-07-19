@@ -15,7 +15,7 @@
       android:layout_height="wrap_content"
       android:orientation="horizontal">
 
-    <Spinner
+    <com.example.vishwasdamle.quicknote.views.ExpenseTypeSpinner
         android:id="@+id/expenseType"
         android:layout_width="108dp"
         android:layout_height="wrap_content"/>

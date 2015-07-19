@@ -58,7 +58,6 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_exp);
-    initSpinner();
     initAutoCompleteSuggestions();
   }
 
@@ -104,15 +103,6 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
     super.onResume();
     setupAutoCompleteWords();
     initNumPad();
-  }
-
-  private void initSpinner() {
-    Spinner spinner = (Spinner) findViewById(R.id.expenseType);
-    ArrayList<String> SpinnerOptions = getStringValues(this);
-    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, simple_spinner_dropdown_item, SpinnerOptions);
-    spinner.setAdapter(adapter);
-    String debitStringValue = getResources().getString(DEBIT.getStringId());
-    spinner.setSelection(adapter.getPosition(debitStringValue), false);
   }
 
   @Override

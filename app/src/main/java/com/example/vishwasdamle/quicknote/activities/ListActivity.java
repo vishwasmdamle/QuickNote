@@ -3,27 +3,31 @@ package com.example.vishwasdamle.quicknote.activities;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.vishwasdamle.quicknote.R;
 import com.example.vishwasdamle.quicknote.adaptors.ExpenseListAdaptor;
+import com.example.vishwasdamle.quicknote.fragments.EditEntryDialogFragment;
 import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
 import com.example.vishwasdamle.quicknote.service.ExpenseService;
 
 import java.util.ArrayList;
 
-public class ListActivity extends ActionBarActivity {
+public class ListActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
 
   private final ExpenseService expenseService;
   private ListView expenseList;
-  private ArrayList<ExpenseEntry> expenseEntries;
+  private DialogFragment editEntryDialogFragment;
 
   public ListActivity() {
     this.expenseService = new ExpenseService(this);
@@ -40,11 +44,12 @@ public class ListActivity extends ActionBarActivity {
     super.onResume();
     expenseList = (ListView) findViewById(R.id.expenseList);
     setupData();
+    expenseList.setOnItemClickListener(this);
     attachLongClickBehavior();
   }
 
   private void setupData() {
-    expenseEntries = getAllExpenseEntries();
+    ArrayList<ExpenseEntry> expenseEntries = getAllExpenseEntries();
     displayEntries(expenseEntries);
     displayBalance(ExpenseEntry.accumulate(expenseEntries).toString());
   }
@@ -66,6 +71,14 @@ public class ListActivity extends ActionBarActivity {
 
   private void displayBalance(String balance) {
     ((TextView) findViewById(R.id.balance_amount)).setText(balance);
+  }
+
+  @Override
+  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    ExpenseEntry expenseEntry = (ExpenseEntry) expenseList.getItemAtPosition(position);
+    editEntryDialogFragment = EditEntryDialogFragment.newInstance(expenseEntry.getUid());
+    editEntryDialogFragment.show(getSupportFragmentManager(), EditEntryDialogFragment.TAG);
+
   }
 
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
