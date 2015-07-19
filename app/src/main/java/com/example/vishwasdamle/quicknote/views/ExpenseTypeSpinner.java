@@ -28,6 +28,10 @@ public class ExpenseTypeSpinner extends Spinner {
     setSelection(DEBIT);
   }
 
+  public ExpenseType getSelection() {
+    return ExpenseType.values()[getSelectedItemPosition()];
+  }
+
   public void setSelection(ExpenseType expenseType) {
     String debitStringValue = getResources().getString(expenseType.getStringId());
     setSelection(adapter.getPosition(debitStringValue), false);

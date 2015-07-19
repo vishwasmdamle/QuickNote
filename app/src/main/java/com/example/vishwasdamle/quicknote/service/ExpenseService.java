@@ -16,8 +16,8 @@ public class ExpenseService {
     expenseEntryMapper = new ExpenseEntryMapper(context);
   }
 
-  public boolean save(ExpenseEntry expenseEntry) {
-    return expenseEntryMapper.insert(expenseEntry);
+  public boolean saveOrUpdate(ExpenseEntry expenseEntry) {
+    return expenseEntryMapper.saveOrUpdate(expenseEntry);
   }
 
   public ArrayList<ExpenseEntry> listAll() {

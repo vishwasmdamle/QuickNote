@@ -15,9 +15,9 @@ import java.util.NoSuchElementException;
 
 public class ExpenseEntryMapper extends DatabaseBuilder {
 
+  private static final String DELETE_ALL_QUERY = "DELETE FROM " + TABLE_NAME_EXPENSE;
   private static final String SELECT_ALL_QUERY = "SELECT * FROM " + TABLE_NAME_EXPENSE
       + " ORDER BY " + UID + " DESC";
-  private static final String DELETE_ALL_QUERY = "DELETE FROM " + TABLE_NAME_EXPENSE;
   private static final String DELETE_QUERY = "DELETE FROM " + TABLE_NAME_EXPENSE
       + " WHERE " + UID + "=";
   private static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME_EXPENSE
@@ -27,16 +27,20 @@ public class ExpenseEntryMapper extends DatabaseBuilder {
     super(context);
   }
 
-  public boolean insert(ExpenseEntry expenseEntry) {
+  public boolean saveOrUpdate(ExpenseEntry expenseEntry) {
     SQLiteDatabase sqLiteDatabase = getWritableDatabase();
     ContentValues contentValues = generateContentValues(expenseEntry);
-    return sqLiteDatabase.insert(TABLE_NAME_EXPENSE, null, contentValues) != -1;
+    if (expenseEntry.getUid() != 0) {
+      return sqLiteDatabase.update(TABLE_NAME_EXPENSE,
+          contentValues, UID + "=" + expenseEntry.getUid(), null) != -1;
+    } else {
+      return sqLiteDatabase.insert(TABLE_NAME_EXPENSE, null, contentValues) != -1;
+    }
   }
 
   public ArrayList<ExpenseEntry> listAll() {
     Cursor cursor = executeSelectionQuery(SELECT_ALL_QUERY);
-    ArrayList<ExpenseEntry> expenseEntryArrayList = getExpenseEntries(cursor);
-    return expenseEntryArrayList;
+    return getExpenseEntries(cursor);
   }
 
   public void deleteAll() {

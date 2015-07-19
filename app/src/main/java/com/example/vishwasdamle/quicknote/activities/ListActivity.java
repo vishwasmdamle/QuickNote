@@ -4,7 +4,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -23,11 +23,11 @@ import com.example.vishwasdamle.quicknote.service.ExpenseService;
 
 import java.util.ArrayList;
 
-public class ListActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
+public class ListActivity extends AppCompatActivity
+    implements AdapterView.OnItemClickListener, EditEntryDialogFragment.Listener {
 
   private final ExpenseService expenseService;
   private ListView expenseList;
-  private DialogFragment editEntryDialogFragment;
 
   public ListActivity() {
     this.expenseService = new ExpenseService(this);
@@ -48,36 +48,22 @@ public class ListActivity extends FragmentActivity implements AdapterView.OnItem
     attachLongClickBehavior();
   }
 
-  private void setupData() {
-    ArrayList<ExpenseEntry> expenseEntries = getAllExpenseEntries();
-    displayEntries(expenseEntries);
-    displayBalance(ExpenseEntry.accumulate(expenseEntries).toString());
-  }
-
-  private ArrayList<ExpenseEntry> getAllExpenseEntries() {
-    return expenseService.listAll();
-  }
-
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-  private void attachLongClickBehavior() {
-    expenseList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-    expenseList.setMultiChoiceModeListener(new ModeChangeListener());
-  }
-
-  private void displayEntries(ArrayList<ExpenseEntry> expenseEntries) {
-    ExpenseListAdaptor expenseListAdaptor = new ExpenseListAdaptor(this, expenseEntries);
-    expenseList.setAdapter(expenseListAdaptor);
-  }
-
-  private void displayBalance(String balance) {
-    ((TextView) findViewById(R.id.balance_amount)).setText(balance);
-  }
-
   @Override
   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     ExpenseEntry expenseEntry = (ExpenseEntry) expenseList.getItemAtPosition(position);
-    editEntryDialogFragment = EditEntryDialogFragment.newInstance(expenseEntry.getUid());
+    DialogFragment editEntryDialogFragment = EditEntryDialogFragment
+        .newInstance(expenseEntry.getUid());
     editEntryDialogFragment.show(getSupportFragmentManager(), EditEntryDialogFragment.TAG);
+
+  }
+
+  @Override
+  public void onOkayClicked() {
+    setupData();
+  }
+
+  @Override
+  public void onCancelClicked() {
 
   }
 
@@ -134,4 +120,31 @@ public class ListActivity extends FragmentActivity implements AdapterView.OnItem
       }
     }
   }
+
+  private void setupData() {
+    ArrayList<ExpenseEntry> expenseEntries = getAllExpenseEntries();
+    displayEntries(expenseEntries);
+    displayBalance(ExpenseEntry.accumulate(expenseEntries).toString());
+  }
+
+  private ArrayList<ExpenseEntry> getAllExpenseEntries() {
+    return expenseService.listAll();
+  }
+
+  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+  private void attachLongClickBehavior() {
+    expenseList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+    expenseList.setMultiChoiceModeListener(new ModeChangeListener());
+  }
+
+  private void displayEntries(ArrayList<ExpenseEntry> expenseEntries) {
+    ExpenseListAdaptor expenseListAdaptor = new ExpenseListAdaptor(this, expenseEntries);
+    expenseList.setAdapter(expenseListAdaptor);
+  }
+
+  private void displayBalance(String balance) {
+    ((TextView) findViewById(R.id.balance_amount)).setText(balance);
+  }
+
+
 }

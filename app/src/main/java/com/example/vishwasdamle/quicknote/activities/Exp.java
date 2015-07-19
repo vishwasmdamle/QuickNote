@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,20 +22,17 @@ import com.example.vishwasdamle.quicknote.model.ExpenseEntry;
 import com.example.vishwasdamle.quicknote.model.ExpenseType;
 import com.example.vishwasdamle.quicknote.service.AutoCompleteService;
 import com.example.vishwasdamle.quicknote.service.ExpenseService;
+import com.example.vishwasdamle.quicknote.views.ExpenseTypeSpinner;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import static android.R.layout.simple_list_item_1;
-import static android.R.layout.simple_spinner_dropdown_item;
 import static android.view.View.INVISIBLE;
 import static android.view.View.OnClickListener;
 import static android.view.View.VISIBLE;
 import static android.widget.AdapterView.OnItemClickListener;
 import static com.example.vishwasdamle.quicknote.model.Constants.*;
-import static com.example.vishwasdamle.quicknote.model.ExpenseType.DEBIT;
-import static com.example.vishwasdamle.quicknote.model.ExpenseType.getStringValues;
-import static com.example.vishwasdamle.quicknote.model.ExpenseType.values;
 import static com.example.vishwasdamle.quicknote.repository.StoredPreferences.isAutoCompleteEnabled;
 import static com.example.vishwasdamle.quicknote.repository.StoredPreferences.isKeyboardEnabled;
 
@@ -193,7 +189,7 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
     autoCompleteService.add(expenseEntry.getDescription());
     setupAutoCompleteWords();
 
-    if (expenseService.save(expenseEntry)) {
+    if (expenseService.saveOrUpdate(expenseEntry)) {
       Toast.makeText(this, R.string.Saved, Toast.LENGTH_SHORT).show();
     } else {
       Toast.makeText(this, R.string.FailedToSave, Toast.LENGTH_SHORT).show();
@@ -207,11 +203,11 @@ public class Exp extends ActionBarActivity implements OnClickListener, OnItemCli
   }
 
   private ExpenseEntry generateExpenseEntry() {
-    Spinner expenseType = (Spinner) findViewById(R.id.expenseType);
+    ExpenseTypeSpinner expenseType = (ExpenseTypeSpinner) findViewById(R.id.expenseType);
     TextView descriptionTextView = (TextView) findViewById(R.id.description);
     TextView amountTextView = (TextView) findViewById(R.id.amount);
 
-    ExpenseType selectedType = values()[expenseType.getSelectedItemPosition()];
+    ExpenseType selectedType = expenseType.getSelection();
     String amountString = String.valueOf(amountTextView.getText());
     String description = String.valueOf(descriptionTextView.getText());
     Double amount;

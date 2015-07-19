@@ -27,8 +27,11 @@ public class DatabaseBuilder extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(SQLiteDatabase sqLiteDatabase) {
-    sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_AUTOCOMPLETE + "(" + WORD + " PRIMARY KEY, " + OCCURRENCE + " INTEGER)");
-    sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_EXPENSE + "(" + UID + " INTEGER PRIMARY KEY, " + TIMESTAMP + ", " + EXPENSE_TYPE + ", " + AMOUNT + ", " + DESCRIPTION + ", " + ACCOUNT + ")");
+    sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_AUTOCOMPLETE
+        + "(" + WORD + " PRIMARY KEY, " + OCCURRENCE + " INTEGER)");
+    sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_EXPENSE
+        + "(" + UID + " INTEGER PRIMARY KEY, " + TIMESTAMP + ", "
+        + EXPENSE_TYPE + ", " + AMOUNT + ", " + DESCRIPTION + ", " + ACCOUNT + ")");
 
   }
 
